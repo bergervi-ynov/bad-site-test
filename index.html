@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volontary bad web page</title>
+
+    <!-- Too many Jquery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Blocking -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+
+    <style>
+        /* Heavy CSS */
+        * {
+            transition: all 0.3s linear;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+        }
+
+        /* Force reflow/repaint */
+        .box {
+            width: 100%;
+            height: 20px;
+            border: 1px solid #ccc;
+            margin: 2px 0;
+            background: linear-gradient(90deg, #f00, #0f0, #00f);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Bad selector */
+        div ul li a span strong em i b.u1.u2.u3.u4.u5 {
+            color: red;
+        }
+
+        /* Useless CSS */
+        .unused-1 {}
+
+        .unused-2 {}
+
+        .unused-3 {}
+
+        .unused-4 {}
+
+        .unused-5 {}
+    </style>
+</head>
+
+<body>
+
+    <!-- Intentional document.write call for audit testing. -->
+    <script>
+        document.write(
+            '<p id="document-write-marker" data-audit-test="document-write">' +
+            'Content inserted with document.write().' +
+            '</p>'
+        );
+    </script>
+
+    <!-- Intentional synchronous XHR for audit testing. -->
+    <script>
+        (function () {
+            var xhr = new XMLHttpRequest();
+
+            try {
+                // The third argument set to false makes this request synchronous.
+                xhr.open("GET", "/pyylt-sync-xhr-test", false);
+                xhr.send(null);
+            } catch (error) {
+                // A missing test endpoint is expected in this deliberately bad test page.
+                console.error("Intentional synchronous XHR test failed:", error);
+            }
+        })();
+    </script>
+    <h1>Test page</h1>
+    <p id="status">Chargement...</p>
+
+    <!-- Big images without lazy loading -->
+    <img src="https://picsum.photos/4000/3000" alt="Huge image 1" width="100%" />
+    <img src="https://picsum.photos/3500/2500" alt="Huge image 2" width="100%" />
+    <img src="https://picsum.photos/3000/2000" alt="Huge image 3" width="100%" />
+
+    <!-- Bad DOM  -->
+    <div id="container"></div>
+
+    <!-- Big Inline JS -->
+    <script>
+        // Global scope polluate 
+        var leaks = [];
+        var counter = 0;
+
+        // Create massive DOM Elements
+        var container = document.getElementById("container");
+        for (var i = 0; i < 500; i++) {
+            var d = document.createElement("div");
+            d.className = "box";
+            d.innerHTML = "<ul><li><a href='#'><span><strong><em><i><b class='u1 u2 u3 u4 u5'>Item " + i + "</b></i></em></strong></span></a></li></ul>";
+            container.appendChild(d);
+        }
+
+        // Agresive setInterval  (CPU)
+        setInterval(function () {
+            counter++;
+            document.getElementById("status").innerText = "Tick " + counter;
+
+            // Forced Reflow 
+            var h = document.body.offsetHeight;
+            document.body.style.paddingLeft = (counter % 30) + "px";
+
+            // Memory leak (reference)
+            leaks.push(new Array(10000).fill("memory-leak-" + counter + "-" + h));
+        }, 20);
+
+        // Scroll listener non-passive + heavy
+        window.addEventListener("scroll", function () {
+            for (var j = 0; j < 2000; j++) {
+                Math.sqrt(j * Math.random());
+            }
+            document.title = "Scroll " + Date.now();
+        });
+
+        // bad jquery
+        $(document).ready(function () {
+            // Query massive répétée
+            setInterval(function () {
+                $(".box").each(function (idx, el) {
+                    el.style.opacity = (Math.random() * 1).toFixed(2);
+                });
+            }, 100);
+
+            // Multiply handlers
+            for (var k = 0; k < 1000; k++) {
+                $(window).on("resize", function () {
+                    $("#status").text("Resize " + Math.random());
+                });
+            }
+        });
+
+        // JS Errors
+        setTimeout(function () {
+            undefinedFunctionCall(); // ReferenceError
+        }, 1500);
+
+        setTimeout(function () {
+            var x = null;
+            x.f(); // TypeError
+        }, 2500);
+    </script>
+
+    <!-- Jquery Again -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+</body>
+
+</html>
