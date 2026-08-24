@@ -116,6 +116,19 @@
             font-family: "Audit Huge CJK", sans-serif;
             font-weight: 900;
         }
+
+        /* Intentional WOFF (not WOFF2) font for YellowLabTools testing. */
+        @font-face {
+            font-family: "Audit DM Sans WOFF";
+            src: url("./fonts/DMSans-Regular.woff") format("woff");
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+        }
+
+        .font-audit-woff {
+            font-family: "Audit DM Sans WOFF", sans-serif;
+        }
     </style>
 </head>
 
@@ -165,6 +178,12 @@
             Texte volontairement limité : Bonjour, Yellow Lab Tools. 你好，性能测试。
         </p>
     </section>
+
+    <h2 class="font-audit-woff">Downloaded legacy WOFF font</h2>
+    <p class="font-audit-woff">
+        Cette phrase charge volontairement une police WOFF, et non WOFF2.
+    </p>
+
 
     <p id="status">Chargement...</p>
     <section id="redundant-body-selector-id" class="redundant-body-selector" data-audit-test="redundant-body-selectors">
