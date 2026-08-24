@@ -72,6 +72,50 @@
         body .redundant-body-selector .redundant-body-selector-note {
             text-decoration: underline;
         }
+
+        /* Intentional web-font issues for YellowLabTools testing. */
+        @font-face {
+            font-family: "Audit Noto Sans";
+            src: url("./fonts/NotoSans-Regular.woff2") format("woff2");
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+        }
+
+        @font-face {
+            font-family: "Audit Noto Serif";
+            src: url("./fonts/NotoSerif-Regular.woff2") format("woff2");
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+        }
+
+        /*
+ * Intentionally bad for production:
+ * - large CJK font file
+ * - OTF rather than WOFF2
+ * - broad Unicode coverage, mostly unused by this page
+ */
+        @font-face {
+            font-family: "Audit Huge CJK";
+            src: url("./fonts/NotoSansCJKsc-Black.otf") format("opentype");
+            font-style: normal;
+            font-weight: 900;
+            font-display: block;
+        }
+
+        .font-audit-sans {
+            font-family: "Audit Noto Sans", sans-serif;
+        }
+
+        .font-audit-serif {
+            font-family: "Audit Noto Serif", serif;
+        }
+
+        .font-audit-huge-cjk {
+            font-family: "Audit Huge CJK", sans-serif;
+            font-weight: 900;
+        }
     </style>
 </head>
 
@@ -102,6 +146,26 @@
         })();
     </script>
     <h1>Test page</h1>
+    <!-- Intentional font-loading issues for YellowLabTools testing. -->
+    <section id="font-audit-fixtures" data-audit-test="font-metrics">
+        <h2 class="font-audit-sans">Downloaded WOFF2 font</h2>
+        <p class="font-audit-sans">
+            Cette phrase force le téléchargement de la police Audit Noto Sans.
+        </p>
+
+        <h2 class="font-audit-serif">Second downloaded WOFF2 font</h2>
+        <p class="font-audit-serif">
+            Cette phrase force le téléchargement de la police Audit Noto Serif.
+        </p>
+
+        <h2 class="font-audit-huge-cjk">
+            Huge non-WOFF2 font: Audit Huge CJK
+        </h2>
+        <p class="font-audit-huge-cjk">
+            Texte volontairement limité : Bonjour, Yellow Lab Tools. 你好，性能测试。
+        </p>
+    </section>
+
     <p id="status">Chargement...</p>
     <section id="redundant-body-selector-id" class="redundant-body-selector" data-audit-test="redundant-body-selectors">
         <span class="redundant-body-selector-label">
