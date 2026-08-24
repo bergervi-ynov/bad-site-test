@@ -129,6 +129,43 @@
         .font-audit-woff {
             font-family: "Audit DM Sans WOFF", sans-serif;
         }
+
+        /* Intentional CSS syntax errors for YellowLabTools testing. */
+
+        /* Invalid property name. */
+        .css-syntax-invalid-property {
+            backgrounnd-color: #ffcc00;
+        }
+
+        /* Missing value. */
+        .css-syntax-missing-value {
+            color: ;
+        }
+
+        /* Invalid value for a known property. */
+        .css-syntax-invalid-value {
+            display: definitely-not-a-display-mode;
+        }
+
+        /* Missing colon between property and value. */
+        .css-syntax-missing-colon {
+            margin 24px;
+        }
+
+        /* Invalid selector syntax. */
+        .css-syntax-invalid-selector>>.child {
+            color: tomato;
+        }
+
+        /* Invalid unit. */
+        .css-syntax-invalid-unit {
+            width: 42bananas;
+        }
+
+        /* Invalid color value. */
+        .css-syntax-invalid-color {
+            border-color: #this-is-not-a-color;
+        }
     </style>
 </head>
 
@@ -183,6 +220,34 @@
     <p class="font-audit-woff">
         Cette phrase charge volontairement une police WOFF, et non WOFF2.
     </p>
+
+    <!-- Intentional CSS syntax error fixtures for YellowLabTools testing. -->
+    <section id="css-syntax-audit-fixtures" data-audit-test="css-syntax-errors">
+        <h2>CSS syntax error test</h2>
+        <p class="css-syntax-invalid-property">
+            Invalid CSS property test.
+        </p>
+        <p class="css-syntax-missing-value">
+            Missing CSS value test.
+        </p>
+        <p class="css-syntax-invalid-value">
+            Invalid CSS value test.
+        </p>
+        <p class="css-syntax-missing-colon">
+            Missing CSS colon test.
+        </p>
+        <p class="css-syntax-invalid-unit">
+            Invalid CSS unit test.
+        </p>
+        <p class="css-syntax-invalid-color">
+            Invalid CSS color test.
+        </p>
+
+        <div class="css-syntax-invalid-selector">
+            <span class="child">Invalid selector fixture.</span>
+        </div>
+    </section>
+
 
 
     <p id="status">Chargement...</p>
