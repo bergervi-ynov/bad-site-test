@@ -56,6 +56,22 @@
         .unused-4 {}
 
         .unused-5 {}
+
+        body .redundant-body-selector {
+            padding: 12px;
+            margin: 12px 0;
+            color: #1d3557;
+            background: #d9f0ff;
+            border: 2px dashed #1d3557;
+        }
+
+        body #redundant-body-selector-id .redundant-body-selector-label {
+            font-weight: bold;
+        }
+
+        body .redundant-body-selector .redundant-body-selector-note {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -87,6 +103,14 @@
     </script>
     <h1>Test page</h1>
     <p id="status">Chargement...</p>
+    <section id="redundant-body-selector-id" class="redundant-body-selector" data-audit-test="redundant-body-selectors">
+        <span class="redundant-body-selector-label">
+            Redundant body selector test
+        </span>
+        <p class="redundant-body-selector-note">
+            These elements are targeted through selectors beginning with "body".
+        </p>
+    </section>
 
     <!-- Big images without lazy loading -->
     <img src="https://picsum.photos/4000/3000" alt="Huge image 1" width="100%" />
