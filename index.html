@@ -248,6 +248,30 @@
         </div>
     </section>
 
+    <!-- Intentional poorly optimized images for YellowLabTools testing. -->
+    <section id="unoptimized-images-audit-fixtures" data-audit-test="unoptimized-images">
+        <h2>Unoptimized image test</h2>
+
+        <figure>
+            <img src="./images/photo-quality-100.jpg" alt="Large JPEG deliberately saved at quality 100" width="3200"
+                height="2400" loading="eager" />
+            <figcaption>JPEG quality 100 with unnecessary bytes.</figcaption>
+        </figure>
+
+        <figure>
+            <img src="./images/photo-as-png.png" alt="Photograph deliberately distributed as a large PNG" width="3000"
+                height="2000" loading="eager" />
+            <figcaption>Photograph intentionally served as PNG.</figcaption>
+        </figure>
+
+        <figure>
+            <img src="./images/large-uncompressed.png" alt="Large PNG deliberately saved with minimal compression"
+                width="4000" height="3000" loading="eager" />
+            <figcaption>PNG intentionally saved with low compression.</figcaption>
+        </figure>
+    </section>
+
+
     <h2 class="font-audit-woff">Downloaded legacy WOFF font</h2>
     <p class="font-audit-woff">
         Cette phrase charge volontairement une police WOFF, et non WOFF2.
