@@ -166,6 +166,15 @@
         .css-syntax-invalid-color {
             border-color: #this-is-not-a-color;
         }
+
+        /* Intentional hidden-image fixtures for YellowLabTools testing. */
+        .hidden-image-direct {
+            display: none;
+        }
+
+        .hidden-image-parent {
+            display: none;
+        }
     </style>
 </head>
 
@@ -214,6 +223,29 @@
         <p class="font-audit-huge-cjk">
             Texte volontairement limité : Bonjour, Yellow Lab Tools. 你好，性能测试。
         </p>
+    </section>
+
+    <!--
+  Intentional hidden images for YellowLabTools testing.
+  These images should still be requested by the browser despite being hidden.
+  They are deliberately not 1x1 pixels, to avoid tracker-image exclusion.
+-->
+    <section id="hidden-images-audit-fixtures" data-audit-test="hidden-images">
+        <!-- The image itself has display: none. -->
+        <img class="hidden-image-direct" src="https://picsum.photos/1200/800?random=101"
+            alt="Hidden image loaded directly" width="1200" height="800" />
+
+        <!-- The parent has display: none, so its image is hidden too. -->
+        <div class="hidden-image-parent">
+            <img src="https://picsum.photos/1400/900?random=102" alt="Hidden image loaded through hidden parent"
+                width="1400" height="900" />
+
+            <picture>
+                <source media="(min-width: 800px)" srcset="https://picsum.photos/1600/1000?random=103" />
+                <img src="https://picsum.photos/1000/700?random=104"
+                    alt="Hidden responsive image loaded through hidden parent" width="1000" height="700" />
+            </picture>
+        </div>
     </section>
 
     <h2 class="font-audit-woff">Downloaded legacy WOFF font</h2>
